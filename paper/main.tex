@@ -1,0 +1,524 @@
+\documentclass[11pt]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,amsthm,mathtools,enumitem,booktabs}
+\usepackage[margin=1.1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem*{problem*}{Problem}
+\theoremstyle{definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\numberwithin{equation}{section}
+
+\newcommand{\Pp}{\mathbb P}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+\newcommand{\cB}{\mathcal B}
+\newcommand{\cL}{\mathcal L}
+\newcommand{\cN}{\mathcal N}
+\newcommand{\dtv}{d_{\mathrm{TV}}}
+\newcommand{\dK}{d_{\mathrm K}}
+\newcommand{\dKt}{\tilde d_{\mathrm K}}
+\newcommand{\bY}{\mathbf Y}
+\newcommand{\bxi}{\boldsymbol\xi}
+\newcommand{\one}{\mathbf 1}
+\DeclareMathOperator{\Po}{Po}
+\DeclareMathOperator{\Bin}{Bin}
+
+\hypersetup{pdftitle={Poisson limits for large boxes in sparse random allocations},pdfauthor={Yitzchak Shmalo}}
+
+\title[Poisson limits in sparse random allocations]{Poisson limits for large boxes in sparse random allocations}
+\author{Yitzchak Shmalo}
+\address{Einstein Institute of Mathematics, The Hebrew University of Jerusalem, Jerusalem, Israel}
+\email{yitzchak.shmalo@gmail.com}
+\date{13 October 2026}
+\subjclass[2020]{60C05, 60F05}
+\keywords{Random allocation, balls in boxes, simply generated trees, Poisson approximation, largest box, local limit theorem}
+
+\begin{document}
+\begin{abstract}
+Let $(Y_1,\dots,Y_n)$ be the random allocation of $m$ balls into $n$ boxes in which an allocation $(y_1,\dots,y_n)$ has probability proportional to $\prod_iw_{y_i}$, and let $\xi_1,\dots,\xi_n$ be independent with $\Pp(\xi_i=k)$ proportional to $w_k\tau^k$, where $\tau$ is chosen so that $\E\xi_i=m/n$. Janson showed that when $m/n$ converges to a positive limit below a threshold determined by the weights, the numbers of boxes with many balls are asymptotically Poisson and the largest boxes of the allocation are close in distribution to the largest of $\xi_1,\dots,\xi_n$, and he asked whether the same holds when $m/n\to0$. Let $a$ be the least $k\ge1$ with $w_k>0$. The answer is positive for every sequence with $m\to\infty$ if every $k$ with $w_k>0$ is a multiple of $a$, for instance if $w_1>0$, and it is negative along every sequence on which $m$ is bounded. If some $k$ with $w_k>0$ is not a multiple of $a$, there are sequences with $m\to\infty$ and $m/n\to0$ along which the answer is negative. When the least such $k$, say $b$, is coprime to $a$, we characterize the sequences along which the answer is positive in terms of $n\Pp(\xi_1=b)$ and the residue of $m$ modulo $a$; when $n\Pp(\xi_1=b)$ has a positive finite limit, the number of boxes with at least $b$ balls converges to a Poisson distribution conditioned on a residue class. The proofs rest on an exact formula for the joint law of the boxes whose sizes are neither $0$ nor $a$ and on a local limit theorem for the binomial distribution with explicit constants.
+\end{abstract}
+\maketitle
+
+\section{Introduction}\label{sec:intro}
+
+Let $w=(w_k)_{k\ge0}$ be a sequence of nonnegative weights with $w_0>0$ and $w_k>0$ for some $k\ge1$. For integers $m\ge0$ and $n\ge1$ let $\cB_{m,n}$ be the set of $y=(y_1,\dots,y_n)\in\Z_{\ge0}^n$ with $y_1+\dots+y_n=m$, let $w(y)=\prod_{i=1}^nw_{y_i}$, and let $Z(m,n)=\sum_{y\in\cB_{m,n}}w(y)$. When $Z(m,n)>0$, the random allocation $B_{m,n}=(Y_1,\dots,Y_n)$ is the random element of $\cB_{m,n}$ with
+\[
+\Pp(B_{m,n}=y)=\frac{w(y)}{Z(m,n)},\qquad y\in\cB_{m,n}.
+\]
+We think of $Y_i$ as the number of balls in box $i$, write $\bY=(Y_1,\dots,Y_n)$, and write $Y_{(1)}\ge Y_{(2)}\ge\dots\ge Y_{(n)}$ for $Y_1,\dots,Y_n$ in decreasing order. We follow the notation of Janson's survey \cite{J12}, which treats random allocations together with simply generated random trees.
+
+Let $\Phi(t)=\sum_kw_kt^k$, let $\rho\in[0,\infty]$ be its radius of convergence, and for $0\le t<\rho$ let $\Psi(t)=t\Phi'(t)/\Phi(t)$. Since $t\Psi'(t)$ is the variance of the probability distribution $(w_kt^k/\Phi(t))_{k\ge0}$, the function $\Psi$ is continuous and strictly increasing on $[0,\rho)$, and $\Psi(0)=0$. Let $\nu=\lim_{t\uparrow\rho}\Psi(t)\in(0,\infty]$ if $\rho>0$, and $\nu=0$ if $\rho=0$. When $m/n<\nu$, let $\tau_n\in[0,\rho)$ be the solution of $\Psi(\tau_n)=m/n$ and let $\xi^{(n)}$ be a random variable with
+\[
+\Pp(\xi^{(n)}=k)=\frac{w_k\tau_n^k}{\Phi(\tau_n)},\qquad k\ge0,
+\]
+so that $\E\xi^{(n)}=\Psi(\tau_n)=m/n$. Let $\bxi=(\xi_1,\dots,\xi_n)$ consist of independent copies of $\xi^{(n)}$, let $\xi_{(1)}\ge\dots\ge\xi_{(n)}$ be the $\xi_i$ in decreasing order, and let $S_n=\xi_1+\dots+\xi_n$. For $A\subseteq\Z_{\ge0}$ and $x\in\Z_{\ge0}^n$ let $N_A(x)=|\{i\le n:x_i\in A\}|$, and write $N_A=N_A(\bY)$ and $N^\xi_A=N_A(\bxi)$; thus $N^\xi_{[h,\infty)}$ has the binomial distribution $\Bin(n,\Pp(\xi^{(n)}\ge h))$.
+
+We use the total variation distance $\dtv$, the Kolmogorov distance $\dK(X,X')=\sup_x|\Pp(X\le x)-\Pp(X'\le x)|$ and, for random variables with values in $\Z_{\ge0}\cup\{\infty\}$, the distance
+\[
+\dKt(X,X')=\sup_{x\in\Z_{\ge0}}\frac{|\Pp(X\le x)-\Pp(X'\le x)|}{1+x}
+\]
+of \cite[(19.13)]{J12}. Then $\dKt\le\dK\le\dtv$, and $\dKt(X_n,X)\to0$ if and only if $X_n\to X$ in distribution \cite[Lemma~19.5]{J12}. Here $\Po(\infty)$ denotes the distribution concentrated at $\infty$.
+
+Suppose that $\nu>0$, that $w_k>0$ for infinitely many $k$, and that $m/n\to\lambda$ with $0<\lambda<\nu$. Janson \cite[Theorem~19.7]{J12} proved that then the following hold, where $h=h(n)$ are integers and $j\ge1$ is fixed.
+\begin{enumerate}[label=(\roman*)]
+\item If $n\Pp(\xi^{(n)}\ge h)\to\alpha\in[0,\infty]$, possibly for $n$ in a subsequence, then $N_{[h,\infty)}\to\Po(\alpha)$ in distribution.
+\item If $n\Pp(\xi^{(n)}\ge h)\to0$, then $Y_{(1)}<h$ with probability tending to one.
+\item If $n\Pp(\xi^{(n)}\ge h)\to\infty$, then $Y_{(j)}\ge h$ with probability tending to one.
+\item $\dKt(N_{[h,\infty)},N^\xi_{[h,\infty)})\to0$.
+\item $\dK(Y_{(j)},\xi_{(j)})\to0$.
+\item $\dtv(Y_{(1)},\xi_{(1)})\to0$.
+\end{enumerate}
+Theorem~19.7 of \cite{J12} is stated with a fixed random variable in place of $\xi^{(n)}$ when $m=\lambda n+o(\sqrt n)$, and in the form above for every sequence with $m/n\to\lambda\in(0,\nu)$; by \cite[Remark~19.8]{J12} it suffices that $c\le m/n\le C$ for constants $0<c<C<\nu$. Janson asked about the remaining case.\footnote{In the arXiv version of \cite{J12} it is Problem~18.9.}
+
+\begin{problem*}[{Janson \cite[Problem~19.9]{J12}}]
+Is Theorem~19.7 (in the $\xi^{(n)}$ version) true also for $\lambda=0<\nu$?
+\end{problem*}
+
+We answer this question. From now on $\nu>0$, $n\to\infty$, $m=m(n)\ge1$ and $m/n\to0$, and we consider only $n$ with $Z(m,n)>0$; we do not assume that $w_k>0$ for infinitely many $k$. (If $m=0$, then $Y_i=\xi_i=0$ for all $i$ and (i)--(vi) hold trivially.) We say that the conclusions of Theorem~19.7 hold if (i)--(vi) hold for all integers $h(n)$ and every fixed $j$. Let
+\[
+a=\min\{k\ge1:w_k>0\}.
+\]
+Every box holds either no ball or at least $a$ balls.
+
+\begin{theorem}\label{thm:div}
+Suppose that every $k$ with $w_k>0$ is a multiple of $a$; for instance, $w_1>0$. Then the conclusions of Theorem~19.7 hold if and only if $m\to\infty$. Moreover, if $m\to\infty$, then
+\[
+\dtv\bigl((Y_{(1)},\dots,Y_{(j)}),(\xi_{(1)},\dots,\xi_{(j)})\bigr)\to0
+\]
+for every fixed $j$, and the total variation distance between the vectors $(Y_i\one\{Y_i\notin\{0,a\}\})_{i\le n}$ and $(\xi_i\one\{\xi_i\notin\{0,a\}\})_{i\le n}$ tends to zero.
+\end{theorem}
+
+Together with \cite[Theorem~19.7 and Remark~19.8]{J12}, Theorem~\ref{thm:div} shows that if $w_1>0$ and $w_k>0$ for infinitely many $k$, the conclusions of Theorem~19.7 hold whenever $m\to\infty$ and $\limsup m/n<\nu$: every subsequence has a further subsequence along which $m/n$ converges to a limit in $[0,\nu)$, and each of the two theorems covers one kind of limit.
+
+If some $k$ with $w_k>0$ is not a multiple of $a$, then $a\ge2$. We then let $b$ be the least such $k$, so that $b>a$, and let $c_n=n\Pp(\xi^{(n)}=b)$. Since $\Phi(t)=w_0(1+O(t))$ and $\Psi(t)=(aw_a/w_0)t^a(1+O(t))$ as $t\to0$, and $\tau_n\to0$,
+\begin{equation}\label{eq:cn}
+c_n=\frac{w_b}{w_0}\Bigl(\frac{w_0}{aw_a}\Bigr)^{b/a}m^{b/a}n^{1-b/a}\bigl(1+O(\tau_n)\bigr).
+\end{equation}
+Here and below, $O(\cdot)$ and $o(\cdot)$ refer to $n\to\infty$, with constants depending only on $w$.
+
+\begin{proposition}\label{prop:fail}\leavevmode
+\begin{enumerate}[label=(\alph*)]
+\item Suppose that $m=m_0$ for all $n$ in an infinite set $\cN$. Then, as $n\to\infty$ in $\cN$, $n\Pp(\xi^{(n)}\ge1)\to m_0/a$ and $\Pp(\xi_{(1)}=0)\to e^{-m_0/a}$, while $Y_{(1)}\ge1$ and $N_{[1,\infty)}\le m_0/a$. Hence (i) and (iv) fail for $h=1$, and (v) and (vi) fail for $j=1$.
+\item Suppose that $b$ exists. If $a\nmid m$, then $Y_{(1)}\ge b$, while $n\Pp(\xi^{(n)}\ge b)=c_n(1+O(\tau_n))$. Hence, along every sequence with $a\nmid m$ and $c_n\to0$, $\dK(Y_{(1)},\xi_{(1)})\to1$, (i), (ii) and (iv) fail for $h=b$, and (v) and (vi) fail for $j=1$. The sequence $m=b+a\lfloor n^{(b-a)/(2b)}\rfloor$ has $m\to\infty$, $m/n\to0$, $a\nmid m$ and $c_n\asymp n^{-(b-a)/(2a)}$.
+\end{enumerate}
+\end{proposition}
+
+By Theorem~\ref{thm:div} and Proposition~\ref{prop:fail}, the conclusions of Theorem~19.7 hold along every sequence with $m\to\infty$ and $m/n\to0$ if and only if every $k$ with $w_k>0$ is a multiple of $a$. For weights of span one, that is, when the $k$ with $w_k>0$ have greatest common divisor $1$, this condition says that $w_1>0$. When $b$ exists and is coprime to $a$, the answer depends on $c_n$ and on the residue of $m$ modulo $a$. We write $X_c$ for a random variable with distribution $\Po(c)$.
+
+\begin{theorem}\label{thm:coprime}
+Suppose that $b$ exists and $\gcd(a,b)=1$.
+\begin{enumerate}[label=(\alph*)]
+\item If $c_n\to\infty$, then the conclusions of Theorem~19.7 hold, and for every fixed $j$
+\[
+\dtv\bigl((Y_{(1)},\dots,Y_{(j)}),(\xi_{(1)},\dots,\xi_{(j)})\bigr)\to0.
+\]
+\item If $c_n\to c\in(0,\infty)$ and $m\equiv\ell\pmod a$ for all $n$, with $\ell\in\{0,\dots,a-1\}$, then $N_{[b,\infty)}$ converges in total variation to the conditional distribution of $X_c$ given $X_c\equiv b'\ell\pmod a$, where $bb'\equiv1\pmod a$. In particular,
+\[
+\Pp(Y_{(1)}<b)\to\begin{cases}e^{-c}/\Pp(a\mid X_c),&\ell=0,\\0,&\ell\ne0,\end{cases}
+\qquad\text{while}\qquad\Pp(\xi_{(1)}<b)\to e^{-c}.
+\]
+Hence (i) and (iv) fail for $h=b$, and (v) and (vi) fail for $j=1$.
+\item If $c_n\to0$, then the conclusions of Theorem~19.7 hold if and only if $m\to\infty$ and $a\mid m$ for all large $n$.
+\end{enumerate}
+Consequently, the conclusions of Theorem~19.7 hold if and only if $m\to\infty$ and every subsequence has a further subsequence along which either $c_n\to\infty$, or $c_n\to0$ and $a\mid m$.
+\end{theorem}
+
+\begin{example}\label{ex:parity}
+Let $w_0=1$, $w_1=0$ and $w_k=1$ for $k\ge2$, so that $\bY$ is uniform on the allocations in which no box holds exactly one ball. Then $\Phi(t)=1+t^2/(1-t)$, $\rho=1$, $\nu=\infty$, $a=2$, $b=3$, and \eqref{eq:cn} reads $c_n=(m^3/(8n))^{1/2}(1+O(\tau_n))$. By Theorem~\ref{thm:coprime}, the conclusions of Theorem~19.7 hold if $n=o(m^3)$; if $m\to\infty$ and $n/m^3\to\infty$, they hold along even $m$ and fail along odd $m$; and if $m^3/(8n)\to c^2$ with $0<c<\infty$, then for even $m$
+\[
+\Pp(N_{[3,\infty)}=k)\to\frac{c^k}{k!\cosh c}\quad(k\text{ even}),\qquad\text{in particular}\qquad\Pp(Y_{(1)}\le2)\to\frac1{\cosh c},
+\]
+and for odd $m$
+\[
+\Pp(N_{[3,\infty)}=k)\to\frac{c^k}{k!\sinh c}\quad(k\text{ odd}),
+\]
+while $\Pp(\xi_{(1)}\le2)\to e^{-c}$ for both parities.
+\end{example}
+
+All of these results come from a comparison of the boxes whose sizes are neither $0$ nor $a$. Let $V=\{0,a\}$. For $x\in\Z_{\ge0}^n$ let
+\[
+R(x)=(x_i\one\{x_i\notin V\})_{i\le n},
+\]
+which we call the reduced vector of $x$, and for $r=R(x)$ let $|r|$ be the number of nonzero coordinates of $r$ and $K(r)=r_1+\dots+r_n$. Write $R=R(\bxi)$ and $R_Y=R(\bY)$, and let $E_m$ be the event that $K(R)\equiv m\pmod a$. Since $S_n-K(R)$ is a multiple of $a$, $E_m=\{S_n\equiv m\pmod a\}$.
+
+\begin{theorem}\label{thm:record}
+Suppose that $m\to\infty$, $m/n\to0$ and $\liminf\Pp(E_m)>0$. Then $Z(m,n)>0$ for all large $n$,
+\[
+\dtv\bigl(\cL(R_Y),\cL(R\mid E_m)\bigr)\to0,
+\qquad\text{and}\qquad
+\Pp(S_n=m)=\Pp(E_m)\Bigl(\frac a{2\pi m}\Bigr)^{1/2}(1+o(1)).
+\]
+\end{theorem}
+
+Theorem~\ref{thm:record} needs no assumption on the span of $w$ or on $\gcd(a,b)$. The vectors themselves are far apart: since $\cL(\bY)=\cL(\bxi\mid S_n=m)$, see Section~\ref{sec:record}, their total variation distance is $1-\Pp(S_n=m)$, which tends to one. Under the assumptions of Theorem~\ref{thm:div}, $E_m$ is the sure event and the reduced vectors are close. Under those of Theorem~\ref{thm:coprime}(a), $\Pp(E_m)\to1/a$, while $K(R_Y)\equiv m\pmod a$ always, so that $\dtv(R_Y,R)\to1-1/a$; only the boxes with more than $b$ balls are close in total variation. When $\gcd(a,b)>1$ Theorem~\ref{thm:record} still applies, but the residue of $S_n$ modulo $a$ is then governed by more than one value of $\xi^{(n)}$, and we do not treat this case.
+
+\subsection*{Related work}
+The random allocations considered here are the case of V.~F.~Kolchin's generalized allocation scheme \cite{Kol68} in which the $\xi_i$ have a power series distribution; see \cite{Kol99,Pav00,J12}. For $w_k=1/k!$ they are the classical allocations of distinguishable balls, for which Poisson limit theorems of this kind are classical \cite{KSC78}. For $a=1$, the formula for $\Pp(S_n=m)$ in Theorem~\ref{thm:record} is contained in a local limit theorem of A.~V.~Kolchin \cite[Theorem~5]{Kol03}; see \cite[Lemma~2.1]{CF19}. Integral and local limit theorems for $S_n$ were obtained in \cite{Kol03} when $w_0w_1>0$, and extended in \cite{KK06,KK07} to weights with $w_0>0$, $w_a>0$ and $w_k=0$ for $0<k<a$; see \cite[Section~2]{CF19}. We include a short proof of the formula, since it comes out of the proof of the comparison of reduced vectors. Chuprunov and Fazekas \cite[Theorem~2.2]{CF19} proved a Poisson limit theorem for the number of boxes with exactly $r$ balls among the first $K$ boxes, for bounded $r$, as $m,n,K\to\infty$ with $m/n\to0$ and $K\Pp(\xi^{(n)}=r)$ tending to a positive constant. When $w_0w_1>0$ and $r\ge2$ this number is a function of $R_Y$, and their result follows from Theorem~\ref{thm:record} with $a=1$.
+
+Two neighbouring questions from \cite{J12} are treated in companion papers. Conjecture~19.4 of \cite{J12}, that $Y_{(1)}=o_p(\log n)$ when $\rho>0$ and $m/n\to0$, is proved in \cite{S26a}. Problem~19.10 of \cite{J12} asks whether $\dtv(Y_{(j)},\xi_{(j)})\to0$ for every fixed $j$ under the assumptions of Theorem~19.7; it is answered in \cite{S26b}, which also treats the joint distribution of finitely many $Y_{(j)}$. Theorems~\ref{thm:div} and~\ref{thm:coprime}(a) give the corresponding statements when $m/n\to0$.
+
+Section~\ref{sec:llt} proves a local limit theorem for the binomial distribution with explicit constants, and Section~\ref{sec:record} proves Theorem~\ref{thm:record}. Section~\ref{sec:janson} derives Janson's conclusions from comparisons of reduced vectors and proves Theorem~\ref{thm:div} and Proposition~\ref{prop:fail}. Section~\ref{sec:resid} proves Theorem~\ref{thm:coprime} and the formulas of Example~\ref{ex:parity}, and Section~\ref{sec:checks} reports exact computations.
+
+\section{A local limit theorem for the binomial distribution}\label{sec:llt}
+
+For $s>0$ let
+\[
+\varepsilon(s)=\frac1s+4s^{-1/3}e^{-s^{2/3}/5};
+\]
+this function decreases to $0$ as $s\to\infty$.
+
+\begin{lemma}\label{lem:llt}
+Let $W\sim\Bin(N,q)$ with $N\ge1$ and $0<q<1$, and let $s^2=Nq(1-q)$.
+\begin{enumerate}[label=(\alph*)]
+\item $\max_j\Pp(W=j)\le\sqrt{\pi/8}\,/s$.
+\item If $s\ge1$, then for every integer $j$,
+\[
+\Bigl|\sqrt{2\pi}\,s\,\Pp(W=j)-e^{-(j-Nq)^2/(2s^2)}\Bigr|\le\varepsilon(s).
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Let $v=q(1-q)$, $\chi(t)=1-q+qe^{it}$, $\psi(t)=e^{-iqt}\chi(t)$ and $\varphi(t)=\psi(t)^N=\E e^{it(W-Nq)}$. For every integer $j$, with $x=j-Nq$,
+\[
+\Pp(W=j)=\frac1{2\pi}\int_{-\pi}^{\pi}\varphi(t)e^{-itx}\,dt.
+\]
+Since $|\psi(t)|^2=1-2v(1-\cos t)$ and $1-\cos t\ge2t^2/\pi^2$ for $|t|\le\pi$,
+\[
+|\varphi(t)|\le\bigl(1-4vt^2/\pi^2\bigr)^{N/2}\le e^{-2s^2t^2/\pi^2},\qquad|t|\le\pi.
+\]
+Hence $\Pp(W=j)\le\frac1{2\pi}\int_\R e^{-2s^2t^2/\pi^2}dt=\sqrt{\pi/8}/s$, which is (a).
+
+For (b), note that $\operatorname{Re}\chi(t)\ge1-q/2>0$ for $|t|\le\pi/3$, and let $f(t)=-iqt+\log\chi(t)$ there, with the principal branch of the logarithm, so that $\varphi=e^{Nf}$. Then $f(0)=f'(0)=0$, $f''(t)=-ve^{it}/\chi(t)^2$, so that $f''(0)=-v$, and
+\[
+f'''(t)=-\frac{ive^{it}(1-q-qe^{it})}{\chi(t)^3}.
+\]
+With $\gamma=\cos t$ we have $|1-q-qe^{it}|^2=1-2v(1+\gamma)$ and $|\chi(t)|^2=1-2v(1-\gamma)$. If $\gamma\ge1/2$, Bernoulli's inequality $(1-y)^3\ge1-3y$, with $y=2v(1-\gamma)\in[0,1]$, gives $|\chi(t)|^6\ge1-6v(1-\gamma)\ge1-2v(1+\gamma)$. Hence $|f'''(t)|\le v$ for $|t|\le\pi/3$, and by Taylor's theorem
+\[
+\Bigl|Nf(t)+\frac{s^2t^2}2\Bigr|\le\frac{s^2|t|^3}6,\qquad|t|\le\frac\pi3.
+\]
+Let $T=s^{-2/3}$, so that $T\le1<\pi/3$. For $|t|\le T$ the right side is at most $1/6$, and $|e^z-1|\le|z|e^{|z|}$ gives
+\[
+\bigl|\varphi(t)-e^{-s^2t^2/2}\bigr|\le e^{1/6}\,\frac{s^2|t|^3}6\,e^{-s^2t^2/2}.
+\]
+Since $e^{-x^2/(2s^2)}=\frac s{\sqrt{2\pi}}\int_\R e^{-s^2t^2/2}e^{-itx}\,dt$,
+\[
+\Bigl|\sqrt{2\pi}\,s\,\Pp(W=j)-e^{-x^2/(2s^2)}\Bigr|\le\frac s{\sqrt{2\pi}}\,(I_1+I_2+I_3),
+\]
+where
+\[
+I_1=\int_{|t|\le T}\bigl|\varphi(t)-e^{-s^2t^2/2}\bigr|\,dt,\qquad I_2=\int_{T<|t|\le\pi}|\varphi(t)|\,dt,\qquad I_3=\int_{|t|>T}e^{-s^2t^2/2}\,dt.
+\]
+Using $\int_\R|t|^3e^{-s^2t^2/2}dt=4/s^4$ and $\int_T^\infty e^{-\beta t^2}dt\le e^{-\beta T^2}/(2\beta T)$ for $\beta>0$, we get
+\[
+I_1\le\frac{2e^{1/6}}{3s^2},\qquad I_2\le\frac{\pi^2}{2s^2T}e^{-2s^2T^2/\pi^2}=\frac{\pi^2}{2s^{4/3}}e^{-2s^{2/3}/\pi^2},\qquad I_3\le\frac2{s^2T}e^{-s^2T^2/2}=\frac2{s^{4/3}}e^{-s^{2/3}/2}.
+\]
+Since $2e^{1/6}/(3\sqrt{2\pi})<0.32$, $(\pi^2+4)/(2\sqrt{2\pi})<2.8$ and $1/2>2/\pi^2>1/5$,
+\[
+\frac s{\sqrt{2\pi}}(I_1+I_2+I_3)\le\frac{0.32}s+2.8\,s^{-1/3}e^{-2s^{2/3}/\pi^2}\le\varepsilon(s).\qedhere
+\]
+\end{proof}
+
+\section{The reduced vectors}\label{sec:record}
+
+In this section and the next, $\tau=\tau_n$ and $\pi_k=\Pp(\xi^{(n)}=k)=w_k\tau^k/\Phi(\tau)$; we write
+\[
+p=\Pp(\xi^{(n)}\notin V),\qquad\kappa=\E\bigl[\xi^{(n)};\xi^{(n)}\notin V\bigr],\qquad\kappa_2=\E\bigl[(\xi^{(n)})^2;\xi^{(n)}\notin V\bigr],\qquad q=\frac{\pi_a}{\pi_0+\pi_a}.
+\]
+Since $m/n\to0$, $\tau\to0$. If $w_k>0$ and $k\notin V$, then $k>a$. Hence, as $n\to\infty$,
+\begin{equation}\label{eq:asym}
+\begin{gathered}
+p\le\kappa\le\kappa_2=O(\tau^{a+1}),\qquad a\pi_a=\frac mn\bigl(1+O(\tau)\bigr),\qquad n\kappa=O(m\tau),\\
+\frac{w_a\tau^a}{2w_0}\le q=O(\tau^a),\qquad s_n^2:=nq(1-q)=\frac ma\bigl(1+O(\tau)\bigr).
+\end{gathered}
+\end{equation}
+Indeed, fix $\tau_*\in(0,\rho)$; for $\tau\le\tau_*$ we have $\kappa_2\le\tau^{a+1}w_0^{-1}\sum_{k>a}k^2w_k\tau_*^{k-a-1}$. Next, $a\pi_a+\kappa=\E\xi^{(n)}=m/n$, and $\pi_a\ge w_a\tau^a/(2w_0)$ for large $n$ because $\Phi(\tau)\to w_0$; this gives the second and third relations. Finally $\pi_a\le q\le\pi_a/\pi_0=w_a\tau^a/w_0$, and $nq=n\pi_a/(1-p)$. In particular, $\kappa_2/q=O(\tau)$.
+
+The allocation $\bY$ has the law of $\bxi$ conditioned on $S_n=m$: for $y\in\cB_{m,n}$, $\Pp(\bxi=y)=w(y)\tau^m/\Phi(\tau)^n$ is proportional to $w(y)$, and summing over $\cB_{m,n}$,
+\[
+\Pp(S_n=m)=\frac{Z(m,n)\tau^m}{\Phi(\tau)^n}.
+\]
+These two statements hold for every $\tau\in(0,\rho)$, with the $\xi_i$ distributed as $(w_k\tau^k/\Phi(\tau))_{k\ge0}$, and so does the following identity, with $q$ computed from $\tau$. For $N\ge0$ let $W_N\sim\Bin(N,q)$, and for $r$ in the range of $R$ let
+\[
+g(r)=\Pp\bigl(aW_{n-|r|}=m-K(r)\bigr).
+\]
+Given $R=r$, the $\xi_i$ with $r_i=0$ are independent, equal to $a$ with probability $q$ and to $0$ otherwise. Hence $S_n-K(r)$ is distributed as $aW_{n-|r|}$, so that $\Pp(S_n=m\mid R=r)=g(r)$, and by Bayes' formula
+\begin{equation}\label{eq:id}
+\Pp(R_Y=r)=\frac{\Pp(R=r)\,g(r)}{\Pp(S_n=m)},\qquad\E g(R)=\Pp(S_n=m).
+\end{equation}
+Note that $g(r)=0$ unless $K(r)\equiv m\pmod a$. In particular, $R_Y$ takes only values $r$ with $K(r)\equiv m\pmod a$.
+
+\begin{proof}[Proof of Theorem~\ref{thm:record}]
+Let $s=s_n$ and $E=E_m$, and also write $E$ for the set of values $r$ of $R$ with $K(r)\equiv m\pmod a$. For $r$ in the range of $R$ let $\Lambda(r)=\sqrt{2\pi}\,s\,g(r)$ and
+\[
+D(r)=\frac{m-K(r)}a-(n-|r|)q,
+\]
+the distance from the point at which $g(r)$ evaluates the binomial probability to the mean of $W_{n-|r|}$. Since $m=n(a\pi_a+\kappa)$ and $q(1-p)=\pi_a$,
+\[
+D(R)=q\bigl(|R|-np\bigr)+\frac{n\kappa-K(R)}a.
+\]
+Here $|R|\sim\Bin(n,p)$, and $K(R)$ is a sum of $n$ independent terms with mean $\kappa$ and second moment $\kappa_2$. Hence, by \eqref{eq:asym},
+\[
+\frac{\E|D(R)|}s\le\frac{q\sqrt{np}+a^{-1}\sqrt{n\kappa_2}}{\sqrt{nq(1-q)}}=\sqrt{\frac{qp}{1-q}}+\frac1a\sqrt{\frac{\kappa_2}{q(1-q)}}=O(\tau^{1/2}).
+\]
+
+Let $r\in E$ with $|r|\le n/2$, and let $s_r^2=(n-|r|)q(1-q)=s^2(1-|r|/n)\ge s^2/2$. Since $s\to\infty$, for large $n$ we have $s_r\ge1$, and Lemma~\ref{lem:llt}(b), applied to $W_{n-|r|}$ at the point $(m-K(r))/a$, gives
+\[
+\Bigl|\sqrt{2\pi}\,s_rg(r)-e^{-D(r)^2/(2s_r^2)}\Bigr|\le\varepsilon(s_r)\le\varepsilon(s/\sqrt2).
+\]
+Using $s/s_r\le\sqrt2$, $|e^{-y^2/2}-1|\le|y|$ for real $y$, and $(1-x)^{-1/2}-1\le2x$ for $0\le x\le1/2$, we obtain
+\begin{align*}
+|\Lambda(r)-1|&\le\frac s{s_r}\Bigl|\sqrt{2\pi}\,s_rg(r)-e^{-D(r)^2/(2s_r^2)}\Bigr|+\frac s{s_r}\Bigl|e^{-D(r)^2/(2s_r^2)}-1\Bigr|+\Bigl|\frac s{s_r}-1\Bigr|\\
+&\le\sqrt2\,\varepsilon(s/\sqrt2)+\frac{2|D(r)|}s+\frac{2|r|}n.
+\end{align*}
+If $|r|>n/2$ we use $0\le\Lambda(r)\le\sqrt{2\pi}\,s$. Since $\Pp(|R|>n/2)\le2^np^{n/2}=(4p)^{n/2}$, $p\to0$ and $s^2\le n$, it follows that
+\[
+\delta_n:=\E\bigl[|\Lambda(R)-1|\one_E\bigr]\le\sqrt2\,\varepsilon(s/\sqrt2)+\frac{2\E|D(R)|}s+2p+\bigl(\sqrt{2\pi}\,s+1\bigr)(4p)^{n/2}\to0.
+\]
+
+Since $\Lambda=0$ off $E$, \eqref{eq:id} gives $\mu_n:=\E\Lambda(R)=\E[\Lambda(R)\one_E]=\sqrt{2\pi}\,s\,\Pp(S_n=m)$, and therefore $|\mu_n-\Pp(E)|\le\delta_n$. As $\liminf\Pp(E)>0$, $\mu_n>0$ for large $n$, so that $Z(m,n)>0$; and since $s^2=(m/a)(1+O(\tau))$,
+\[
+\Pp(S_n=m)=\frac{\mu_n}{\sqrt{2\pi}\,s}=\Pp(E)\Bigl(\frac a{2\pi m}\Bigr)^{1/2}(1+o(1)).
+\]
+Finally, by \eqref{eq:id}, $\Pp(R_Y=r)=\Pp(R=r)\Lambda(r)/\mu_n$, while $\Pp(R=r\mid E)=\Pp(R=r)\one_E(r)/\Pp(E)$. Hence
+\[
+\dtv\bigl(\cL(R_Y),\cL(R\mid E)\bigr)=\frac12\E\Bigl[\Bigl|\frac{\Lambda(R)}{\mu_n}-\frac1{\Pp(E)}\Bigr|\one_E\Bigr]\le\frac12\Bigl(\frac{\delta_n}{\mu_n}+\frac{|\Pp(E)-\mu_n|}{\mu_n}\Bigr)\le\frac{\delta_n}{\mu_n}\to0.\qedhere
+\]
+\end{proof}
+
+\section{From reduced vectors to Janson's conclusions}\label{sec:janson}
+
+For an integer $h_0\ge1$ and $x\in\Z_{\ge0}^n$ let $F_{h_0}(x)=(x_i\one\{x_i\ge h_0\})_{i\le n}$.
+
+\begin{lemma}\label{lem:transfer}
+Let $h_0\ge1$ be fixed. Suppose that $\dtv(F_{h_0}(\bY),F_{h_0}(\bxi))\to0$ and that $N_{[h_0-1,\infty)}\to\infty$ and $N^\xi_{[h_0-1,\infty)}\to\infty$ in probability. Then the conclusions of Theorem~19.7 hold, and $\dtv((Y_{(1)},\dots,Y_{(j)}),(\xi_{(1)},\dots,\xi_{(j)}))\to0$ for every fixed $j$.
+\end{lemma}
+
+\begin{proof}
+Fix $j$. For $u\in\Z_{\ge0}^n$ let $u_{(1)}\ge\dots\ge u_{(n)}$ be its coordinates in decreasing order, and let $H(u)=(\max(u_{(i)},h_0-1))_{i\le j}$. If $x\in\Z_{\ge0}^n$ has at least $j$ coordinates that are at least $h_0-1$, then $(x_{(1)},\dots,x_{(j)})=H(F_{h_0}(x))$: for $i\le j$, if $x_{(i)}\ge h_0$ then $F_{h_0}(x)_{(i)}=x_{(i)}$, and if $x_{(i)}=h_0-1$ then fewer than $i$ coordinates of $F_{h_0}(x)$ are nonzero, so $F_{h_0}(x)_{(i)}=0$ and the $i$th coordinate of $H(F_{h_0}(x))$ is $h_0-1$. Hence
+\[
+\dtv\bigl((Y_{(i)})_{i\le j},(\xi_{(i)})_{i\le j}\bigr)\le\dtv\bigl(F_{h_0}(\bY),F_{h_0}(\bxi)\bigr)+\Pp\bigl(N_{[h_0-1,\infty)}<j\bigr)+\Pp\bigl(N^\xi_{[h_0-1,\infty)}<j\bigr)\to0.
+\]
+This proves the statement about $(Y_{(1)},\dots,Y_{(j)})$, and with it (v) and (vi).
+
+For (iv), if $h\ge h_0$ then $N_{[h,\infty)}(x)$ is a function of $F_{h_0}(x)$, so that $\dKt(N_{[h,\infty)},N^\xi_{[h,\infty)})\le\dtv(F_{h_0}(\bY),F_{h_0}(\bxi))$. If $h\le h_0-1$, then $N_{[h,\infty)}\ge N_{[h_0-1,\infty)}$ and $N^\xi_{[h,\infty)}\ge N^\xi_{[h_0-1,\infty)}$. Since $\dKt(X,\infty)=\sup_x\Pp(X\le x)/(1+x)$ can only decrease when $X$ is increased,
+\[
+\dKt\bigl(N_{[h,\infty)},N^\xi_{[h,\infty)}\bigr)\le\dKt\bigl(N_{[h_0-1,\infty)},\infty\bigr)+\dKt\bigl(N^\xi_{[h_0-1,\infty)},\infty\bigr)\to0
+\]
+by \cite[Lemma~19.5]{J12}. Both bounds are uniform in $h$, which gives (iv) for every sequence $h(n)$.
+
+For (i), suppose that $n\Pp(\xi^{(n)}\ge h)\to\alpha$ along a subsequence, and let $p_h=\Pp(\xi^{(n)}\ge h)$. If $\alpha<\infty$, then $p_h\to0$, and Le Cam's inequality $\dtv(\Bin(n,p_h),\Po(np_h))\le np_h^2$ \cite{LeC60} shows that $N^\xi_{[h,\infty)}\to\Po(\alpha)$ in distribution; if $\alpha=\infty$, then $N^\xi_{[h,\infty)}\to\infty$ in probability by Chebyshev's inequality. In both cases $\dKt(N^\xi_{[h,\infty)},\Po(\alpha))\to0$ by \cite[Lemma~19.5]{J12}, and (iv) together with the triangle inequality gives $\dKt(N_{[h,\infty)},\Po(\alpha))\to0$, which is (i). The cases $\alpha=0$ and $\alpha=\infty$ of (i) give (ii) and (iii).
+\end{proof}
+
+\begin{lemma}\label{lem:full}
+Suppose that $m\to\infty$, $m/n\to0$ and $\Pp(E_m)\to1$. Then $\dtv(R_Y,R)\to0$, the conclusions of Theorem~19.7 hold, and $\dtv((Y_{(1)},\dots,Y_{(j)}),(\xi_{(1)},\dots,\xi_{(j)}))\to0$ for every fixed $j$.
+\end{lemma}
+
+\begin{proof}
+For any event $A$ with $\Pp(A)>0$ and any random element $X$, $\dtv(\cL(X\mid A),\cL(X))\le1-\Pp(A)$. Hence Theorem~\ref{thm:record} gives $\dtv(R_Y,R)\to0$. We apply Lemma~\ref{lem:transfer} with $h_0=a+1$. Every integer $k\ge a+1$ lies outside $V$, so $F_{a+1}(x)=F_{a+1}(R(x))$ and $\dtv(F_{a+1}(\bY),F_{a+1}(\bxi))\le\dtv(R_Y,R)\to0$. Next, $N^\xi_{[a,\infty)}$ is binomial with mean at least $n\pi_a$, which tends to infinity by \eqref{eq:asym}, so $N^\xi_{[a,\infty)}\to\infty$ in probability. Finally, the boxes of $\bY$ with sizes in $V$ hold $m-K(R_Y)$ balls, so that $N_{[a,\infty)}\ge N_{\{a\}}=(m-K(R_Y))/a$, and by Markov's inequality and \eqref{eq:asym}
+\[
+\Pp\bigl(K(R_Y)>m/2\bigr)\le\Pp\bigl(K(R)>m/2\bigr)+\dtv(R_Y,R)\le\frac{2n\kappa}m+\dtv(R_Y,R)\to0.
+\]
+Hence $N_{[a,\infty)}\ge m/(2a)$ with probability tending to one, and Lemma~\ref{lem:transfer} applies.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:div}]
+If every $k$ with $w_k>0$ is a multiple of $a$, then $S_n$ is a multiple of $a$, so $Z(m,n)>0$ forces $a\mid m$, and then $E_m$ is the sure event. If $m\to\infty$, Lemma~\ref{lem:full} gives all the assertions. If $m\not\to\infty$, then $m$ takes some value $m_0$ for infinitely many $n$, and the conclusions fail by Proposition~\ref{prop:fail}(a).
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:fail}]
+(a) As $n\to\infty$ in $\cN$ we have $\tau\to0$, and \eqref{eq:asym} gives $n\pi_a=(m_0-n\kappa)/a$ with $n\kappa=O(m_0\tau)\to0$, and $np\le n\kappa$. Hence $n\Pp(\xi^{(n)}\ge1)=n\pi_a+np\to m_0/a$, and $\Pp(\xi_{(1)}=0)=(1-\Pp(\xi^{(n)}\ge1))^n\to e^{-m_0/a}$. On the other hand, $Y_{(1)}\ge1$ because $m_0\ge1$, and every nonempty box holds at least $a$ balls, so $N_{[1,\infty)}\le m_0/a$. Thus $\Pp(N_{[1,\infty)}=0)=0$ while $\Pp(X_{m_0/a}=0)>0$, so (i) fails for $h=1$, and
+\begin{gather*}
+\dKt\bigl(N_{[1,\infty)},N^\xi_{[1,\infty)}\bigr)\ge\Pp\bigl(N^\xi_{[1,\infty)}=0\bigr)=\Pp(\xi_{(1)}=0),\\
+\dtv(Y_{(1)},\xi_{(1)})\ge\dK(Y_{(1)},\xi_{(1)})\ge\Pp(\xi_{(1)}=0),
+\end{gather*}
+and these lower bounds tend to $e^{-m_0/a}>0$.
+
+(b) If $a\nmid m$, then some $Y_i$ is not a multiple of $a$, and since $w_{Y_i}>0$, $Y_i\ge b$. Next, $\Pp(\xi^{(n)}\ge b)=\pi_b+\sum_{k>b}\pi_k$, and $\sum_{k>b}\pi_k=O(\tau^{b+1})=O(\tau\pi_b)$ as in \eqref{eq:asym}; hence $n\Pp(\xi^{(n)}\ge b)=c_n(1+O(\tau))$. If $c_n\to0$, then $\Pp(\xi_{(1)}\ge b)\le n\Pp(\xi^{(n)}\ge b)\to0$ while $\Pp(Y_{(1)}\ge b)=1$. Thus $\dK(Y_{(1)},\xi_{(1)})\ge\Pp(\xi_{(1)}<b)\to1$, (i) fails for $h=b$ with $\alpha=0$, (ii) fails for $h=b$, and
+\[
+\dKt\bigl(N_{[b,\infty)},N^\xi_{[b,\infty)}\bigr)\ge\Pp\bigl(N^\xi_{[b,\infty)}=0\bigr)=\Pp(\xi_{(1)}<b)\to1.
+\]
+For the last assertion, $m\equiv b\not\equiv0\pmod a$, the allocation with one box holding $b$ balls and $\lfloor n^{(b-a)/(2b)}\rfloor$ boxes holding $a$ balls shows that $Z(m,n)>0$ for large $n$, and $m\asymp n^{(b-a)/(2b)}$, so that \eqref{eq:cn} gives $c_n\asymp n^{(b-a)/(2a)}n^{1-b/a}=n^{-(b-a)/(2a)}$.
+\end{proof}
+
+\section{Residues}\label{sec:resid}
+
+\begin{lemma}\label{lem:resid}
+Let $a\ge2$ and $b$ be coprime integers, and let $U_1,\dots,U_N$ be independent, identically distributed, integer valued random variables with $\Pp(U_1=0)\ge\alpha$ and $\Pp(U_1=b)\ge\beta$. Then for every integer $\ell$,
+\[
+\Bigl|\Pp(U_1+\dots+U_N\equiv\ell\pmod a)-\frac1a\Bigr|\le\exp\Bigl(-\alpha\beta\Bigl(1-\cos\frac{2\pi}a\Bigr)N\Bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+For $u\in\{1,\dots,a-1\}$ let $\phi_u=\E e^{2\pi iuU_1/a}$. Then
+\begin{align*}
+|\phi_u|^2&=1-\sum_{x,y}\Pp(U_1=x)\Pp(U_1=y)\Bigl(1-\cos\frac{2\pi u(x-y)}a\Bigr)\\
+&\le1-2\alpha\beta\Bigl(1-\cos\frac{2\pi ub}a\Bigr)\le1-2\alpha\beta\Bigl(1-\cos\frac{2\pi}a\Bigr),
+\end{align*}
+since every term of the sum is nonnegative, the terms with $(x,y)=(0,b)$ and $(b,0)$ contribute at least $2\alpha\beta(1-\cos(2\pi ub/a))$, and $ub\not\equiv0\pmod a$. Hence
+\[
+\Bigl|\Pp\Bigl(\sum_iU_i\equiv\ell\pmod a\Bigr)-\frac1a\Bigr|=\Bigl|\frac1a\sum_{u=1}^{a-1}e^{-2\pi iu\ell/a}\phi_u^N\Bigr|\le\Bigl(1-2\alpha\beta\Bigl(1-\cos\frac{2\pi}a\Bigr)\Bigr)^{N/2},
+\]
+and $1-y\le e^{-y}$ completes the proof.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:coprime}]
+Every $k<b$ with $w_k>0$ is a multiple of $a$. Since $\pi_b$ is of order $\tau^b$ and $\Pp(\xi^{(n)}>b)=O(\tau^{b+1})$ as in \eqref{eq:asym}, we have $n\Pp(\xi^{(n)}>b)=O(c_n\tau)$. As $b>a$, a coordinate of $x$ that is at least $b$ lies outside $V$; hence $N_{[b,\infty)}(x)$ and $F_{b+1}(x)$ are functions of $R(x)$. In cases (a) and (b), $c_n$ is bounded below, so $m\to\infty$ by \eqref{eq:cn}.
+
+(a) Let $J=\{i:\xi_i>b\}$ and $F=F_{b+1}(\bxi)$. The vector $F$ determines $J$ and the $\xi_i$ with $i\in J$, and given $F$ the $\xi_i$ with $i\notin J$ are independent with distribution $\cL(\xi^{(n)}\mid\xi^{(n)}\le b)$, which gives mass at least $\pi_0$ to $0$ and at least $\pi_b$ to $b$. By Lemma~\ref{lem:resid}, on the event $\{|J|\le n/2\}$,
+\[
+\bigl|\Pp(E_m\mid F)-1/a\bigr|\le\eta_n:=\exp\Bigl(-\pi_0\Bigl(1-\cos\frac{2\pi}a\Bigr)\frac{c_n}2\Bigr)\to0,
+\]
+and $\Pp(|J|>n/2)\le(4\Pp(\xi^{(n)}>b))^{n/2}\to0$. Hence $\Pp(E_m)\to1/a$ and
+\[
+\dtv\bigl(\cL(F\mid E_m),\cL(F)\bigr)=\frac{\E|\Pp(E_m\mid F)-\Pp(E_m)|}{2\Pp(E_m)}\le\frac{\eta_n+\Pp(|J|>n/2)}{\Pp(E_m)}\to0.
+\]
+By Theorem~\ref{thm:record}, $\dtv(\cL(F_{b+1}(\bY)),\cL(F\mid E_m))\le\dtv(\cL(R_Y),\cL(R\mid E_m))\to0$, and therefore $\dtv(F_{b+1}(\bY),F_{b+1}(\bxi))\to0$. Next, $N^\xi_{[b,\infty)}$ is binomial with mean at least $c_n\to\infty$, so it tends to infinity in probability, and by Theorem~\ref{thm:record}, for every fixed $k$,
+\[
+\Pp\bigl(N_{[b,\infty)}\le k\bigr)\le\Pp\bigl(N^\xi_{[b,\infty)}\le k\mid E_m\bigr)+o(1)\le\frac{\Pp(N^\xi_{[b,\infty)}\le k)}{\Pp(E_m)}+o(1)\to0.
+\]
+Lemma~\ref{lem:transfer} with $h_0=b+1$ completes the proof of (a).
+
+(b) Let $M=N^\xi_{\{b\}}$, a binomial variable with mean $c_n$, and $L=N^\xi_{(b,\infty)}$, so that $\Pp(L>0)\le n\Pp(\xi^{(n)}>b)=O(c_n\tau)\to0$. By Le Cam's inequality, $\dtv(M,X_{c_n})\le c_n\pi_b\to0$, so $M\to X_c$ in total variation. On $\{L=0\}$ the coordinates of $R$ that differ from $b$ are multiples of $a$, so $K(R)\equiv bM\pmod a$ and $E_m\cap\{L=0\}=\{M\equiv b'\ell\pmod a\}\cap\{L=0\}$. Hence, uniformly over sets $A\subseteq\Z_{\ge0}$,
+\[
+\Pp\bigl(N^\xi_{[b,\infty)}\in A,\ E_m\bigr)=\Pp\bigl(M\in A,\ M\equiv b'\ell\bigr)+o(1)=\Pp\bigl(X_c\in A,\ X_c\equiv b'\ell\bigr)+o(1),
+\]
+with congruences modulo $a$. In particular $\Pp(E_m)\to\Pp(X_c\equiv b'\ell\pmod a)>0$, and $\cL(N^\xi_{[b,\infty)}\mid E_m)$ converges in total variation to $\cL(X_c\mid X_c\equiv b'\ell\pmod a)$. Since $N_{[b,\infty)}$ is a function of $R_Y$, Theorem~\ref{thm:record} shows that $N_{[b,\infty)}$ has the same limit. Taking $A=\{0\}$, $\Pp(Y_{(1)}<b)=\Pp(N_{[b,\infty)}=0)$ tends to $e^{-c}/\Pp(a\mid X_c)$ if $b'\ell\equiv0$, that is, if $\ell=0$, and to $0$ otherwise. On the other hand $n\Pp(\xi^{(n)}\ge b)=c_n(1+O(\tau))\to c$, so that $N^\xi_{[b,\infty)}\to X_c$ in distribution and $\Pp(\xi_{(1)}<b)\to e^{-c}$. As $a\ge2$ and $c>0$, the law of $X_c$ conditioned on a residue class modulo $a$ differs from $\Po(c)$, and $e^{-c}/\Pp(a\mid X_c)>e^{-c}$. Hence (i) and (iv) fail for $h=b$, and $\dK(Y_{(1)},\xi_{(1)})\ge|\Pp(Y_{(1)}<b)-\Pp(\xi_{(1)}<b)|$ does not tend to zero.
+
+(c) If $m\not\to\infty$, the conclusions fail by Proposition~\ref{prop:fail}(a), and if $a\nmid m$ for infinitely many $n$, they fail along those $n$ by Proposition~\ref{prop:fail}(b). Conversely, suppose that $m\to\infty$ and $a\mid m$. On the event that no $\xi_i$ is at least $b$, every coordinate of $R$ is a multiple of $a$, so that $\Pp(E_m)\ge1-n\Pp(\xi^{(n)}\ge b)=1-c_n(1+O(\tau))\to1$, and Lemma~\ref{lem:full} applies.
+
+For the last assertion, note that (i)--(vi) hold along the whole sequence if and only if every subsequence has a further subsequence along which they hold. If $m\to\infty$ and every subsequence has a further one along which either $c_n\to\infty$, or $c_n\to0$ and $a\mid m$, then the conclusions hold by (a) and (c). Conversely, suppose that they hold. Then $m\to\infty$ by Proposition~\ref{prop:fail}(a). Every subsequence has a further subsequence along which $c_n\to c\in[0,\infty]$ and $m\equiv\ell\pmod a$ for a fixed $\ell$; by (b), $c\in\{0,\infty\}$, and if $c=0$ then $\ell=0$ by Proposition~\ref{prop:fail}(b).
+\end{proof}
+
+\begin{proof}[Proof of the formulas in Example~\ref{ex:parity}]
+Here $\Phi(t)=1+\sum_{k\ge2}t^k=1+t^2/(1-t)$, so $\rho=1$, and $\Psi(t)\to\infty$ as $t\uparrow1$, so $\nu=\infty$. With $a=2$, $b=3$ and $w_0=w_2=w_3=1$, \eqref{eq:cn} gives $c_n=(m^3/(8n))^{1/2}(1+O(\tau_n))$. If $m^3/(8n)\to c^2$, Theorem~\ref{thm:coprime}(b) applies with $b'=1$: for even $m$, $\ell=0$ and $\Pp(X_c\equiv0\pmod2)=e^{-c}\cosh c$; for odd $m$, $\ell=1$ and $\Pp(X_c\equiv1\pmod2)=e^{-c}\sinh c$. The other two cases are Theorem~\ref{thm:coprime}(a) and~(c). For the computations in Section~\ref{sec:checks}, note that $Z(m,n)=\sum_{j\ge1}\binom nj\binom{m-j-1}{j-1}$, since $\binom nj$ counts the choices of $j$ nonempty boxes and $\binom{m-j-1}{j-1}$ the compositions of $m$ into $j$ parts that are at least $2$, and that for even $m$ the allocations with $Y_{(1)}\le2$ are those in which $m/2$ boxes hold two balls each, so that $\Pp(Y_{(1)}\le2)=\binom n{m/2}/Z(m,n)$.
+\end{proof}
+
+\section{Computations}\label{sec:checks}
+
+The script \texttt{code/checks.py} in the repository listed under Data availability uses only the Python standard library, and its output is \texttt{code/checks.out}. It computes the following quantities exactly, or by floating-point evaluation of exact formulas, and runs in a few seconds.
+
+\emph{Lemma~\ref{lem:llt}.} On a grid of 88 pairs $(N,q)$ with $1\le N\le30000$ and $10^{-4}\le q\le0.99$, the largest value of $s\max_j\Pp(W=j)/\sqrt{\pi/8}$ is $0.6585$, and over the pairs with $s\ge1$ the largest ratio of the error in Lemma~\ref{lem:llt}(b) to $\varepsilon(s)$ is $0.0489$.
+
+\emph{The identity \eqref{eq:id}.} Both identities in \eqref{eq:id} are verified in rational arithmetic for $w=(2,1,0,3,1,0,2)$ with $(m,n,\tau)=(7,4,2/5)$, where $a=1$, and for $w=(1,0,2,1,3,0,1,2)$ with $(m,n,\tau)=(7,4,1/3)$ and $(8,4,3/7)$, where $a=2$. Replacing $q$ by $\pi_a$ breaks both identities.
+
+\emph{Uniform weights.} For $w_k=1$ for all $k$, $\bY$ is uniform on $\cB_{m,n}$, $a=1$, and $\xi^{(n)}$ is geometric with $\Pp(\xi^{(n)}=k)=(1-t)t^k$, where $t=\tau_n=m/(m+n)$. By \eqref{eq:id} the ratio $\Pp(R_Y=r)/\Pp(R=r)$ depends on $r$ only through $(|r|,K(r))$, and $\dtv(R_Y,R)$ can be computed exactly from the joint law of $|R|$ and $K(R)$. Table~\ref{tab:uniform} shows the result and the ratio $\sqrt{2\pi m}\,\Pp(S_n=m)$, which tends to $1$ by Theorem~\ref{thm:record}. Along $n=m^2$ the distance lies between $0.83\,m/n$ and $0.92\,m/n$. For fixed $m/n=0.1$ the distance stays near $0.09$, and the ratio tends to $1.1^{-1/2}=0.9535$ rather than to $1$, because then the variance of $S_n$ is $1.1m$. For the largest box, $\dK(Y_{(1)},\xi_{(1)})$ equals $0.0301$, $0.0115$, $0.0036$ and $0.0012$ for $m=\sqrt n=10$, $30$, $100$ and $300$. For $m=1$ it equals $\Pp(\xi_{(1)}=0)=(1-1/(n+1))^n$, which is $0.3855$, $0.3697$, $0.36790$ and $0.367880$ for $n=10$, $10^2$, $10^4$ and $10^6$ and tends to $e^{-1}=0.367879$, as in Proposition~\ref{prop:fail}(a).
+
+\begin{table}[ht]
+\caption{Weights $w_k=1$: the distance between the reduced vectors and the local limit ratio.}\label{tab:uniform}
+\centering
+\begin{tabular}{rrcccc}
+\toprule
+$m$&$n$&$m/n$&$\dtv(R_Y,R)$&$\dtv(R_Y,R)\,n/m$&$\sqrt{2\pi m}\,\Pp(S_n=m)$\\
+\midrule
+20&400&0.05&0.041604&0.8321&0.971833\\
+50&2500&0.02&0.017695&0.8847&0.988498\\
+100&10000&0.01&0.009022&0.9022&0.994208\\
+200&40000&0.005&0.004555&0.9110&0.997094\\
+400&160000&0.0025&0.002288&0.9153&0.998544\\
+800&640000&0.00125&0.001147&0.9175&0.999271\\
+\midrule
+100&1000&0.1&0.089278&0.8928&0.952661\\
+200&2000&0.1&0.089667&0.8967&0.953062\\
+400&4000&0.1&0.089825&0.8982&0.953262\\
+800&8000&0.1&0.089912&0.8991&0.953362\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\emph{Example~\ref{ex:parity}.} The laws of $Y_{(1)}$ and of $N_{[3,\infty)}$ are computed from exact counts of allocations. For $n=m^2$, where $c_n\to\infty$, $\dK(Y_{(1)},\xi_{(1)})$ equals $0.156$, $0.084$, $0.033$ and $0.0086$ for $m=20$, $40$, $80$ and $160$, and $0.258$, $0.137$, $0.055$ and $0.015$ for $m=21$, $41$, $81$ and $161$. For $n=m^4$, where $c_n\to0$, it equals $0.098$, $0.072$, $0.053$ and $0.038$ for $m=10$, $20$, $40$ and $80$, and $0.901$, $0.926$, $0.946$ and $0.962$ for $m=11$, $21$, $41$ and $81$. Table~\ref{tab:parity} treats $n=\operatorname{round}(m^3/8)$, where $c_n\to1$; the limits for $c=1$ are $1/\cosh1=0.648054$ for even $m$ and $k=0$, and $1/\sinh1=0.850918$ for odd $m$ and $k=1$, while $\Pp(\xi_{(1)}\le2)\to e^{-1}=0.367879$. Finally, the ratio $\sqrt{\pi m}\,\Pp(S_n=m)/\Pp(E_m)$ of Theorem~\ref{thm:record}, with $\Pp(E_m)=(1+(-1)^m(\Phi(-\tau_n)/\Phi(\tau_n))^n)/2$, equals $0.990$ for $n=m^2$ and $m=640$, $641$; $0.994$ and $1.0008$ for $n=\operatorname{round}(m^3/8)$ and $m=320$, $321$; and $0.998$ for $n=m^4$ and $m=80$. For odd $m$ and $n=m^4$, $\Pp(E_m)\to0$ and Theorem~\ref{thm:record} does not apply.
+
+\begin{table}[ht]
+\caption{Example~\ref{ex:parity} with $n=\operatorname{round}(m^3/8)$. Here $p_N=\Pp(N_{[3,\infty)}=k)$ and $p_X=\Pp(X_{c_n}=k\mid X_{c_n}\equiv m\pmod2)$, with $k=0$ for even $m$ and $k=1$ for odd $m$; the last two columns are the total variation distances from the law of $N_{[3,\infty)}$ to the conditioned law of $X_{c_n}$ and to $\Po(c_n)$.}\label{tab:parity}
+\centering
+\begin{tabular}{rrccccc}
+\toprule
+$m$&$n$&$c_n$&$p_N$&$p_X$&conditioned&$\Po(c_n)$\\
+\midrule
+20&1000&0.8046&0.673407&0.745415&0.080814&0.331224\\
+40&8000&0.8954&0.661004&0.700084&0.045949&0.375237\\
+80&64000&0.9458&0.654613&0.674936&0.024634&0.401993\\
+160&512000&0.9724&0.651356&0.661714&0.012784&0.416621\\
+\midrule
+21&1158&0.8126&0.877126&0.897866&0.056893&0.542524\\
+41&8615&0.8978&0.862768&0.877301&0.037152&0.545932\\
+81&66430&0.9464&0.856480&0.864959&0.021432&0.553893\\
+161&521660&0.9726&0.853601&0.858168&0.011555&0.559930\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+These computations test the identities and inequalities used in the proofs; they are not part of them.
+
+\section*{Acknowledgements and funding}
+The research presented in this paper was supported by the European Research
+Council (ERC) under the European Union's Horizon Europe research and
+innovation programme (grant agreement No.~101041711), by the Simons
+Foundation as part of the Collaboration on the Mathematical and Scientific
+Foundations of Deep Learning, by Heights Labs, by Convex Nexus Capital, by
+the Israel Science Foundation (grant number 2258/19), and by the Israel
+Science Foundation (ISF Grant 4101/25). Computational resources were
+provided in part by Google Cloud through its education credits program
+(credit 530550103).
+
+\section*{Declaration of competing interest}
+The author holds equity in Heights Labs and in Convex Nexus Capital and
+has a management role at Convex Nexus Capital. These entities are included
+in the funding declaration above.
+
+\section*{Declaration of generative AI and AI-assisted technologies}
+The paper comes out of Math Brain, an ongoing project on the use of AI systems for research mathematics. Problem~19.9 of \cite{J12} was among the open problems in probability on which the project's agents worked in September 2026. On 13 September 2026 Claude Fable~5.1 (Anthropic) proved a version of Theorem~\ref{thm:div} for weights with $w_1>0$ and of Proposition~\ref{prop:fail} for weights of span one, with the weights of Example~\ref{ex:parity} as the example. On 13 October 2026 Claude Opus~5.5 (Anthropic), working in Claude Code, found Theorem~\ref{thm:record} and the proofs of the results in their present form, including Theorem~\ref{thm:coprime} and the limits in Example~\ref{ex:parity}, searched the literature, and wrote the computer checks and the manuscript. The author directed the work and is responsible for the content of the paper and for decisions concerning its dissemination.
+
+\section*{Data availability}
+No data were used. The code is available at\\ \url{https://github.com/yspennstate/sparse-allocation-poisson-limits}.
+
+\begin{thebibliography}{12}
+
+\bibitem{CF19}
+A.~Chuprunov and I.~Fazekas, Poisson limit theorems for the generalized allocation scheme, \emph{Annales Univ. Sci. Budapest., Sect. Comp.} \textbf{49} (2019), 77--96.
+
+\bibitem{J12}
+S.~Janson, Simply generated trees, conditioned Galton--Watson trees, random allocations and condensation, \emph{Probab. Surv.} \textbf{9} (2012), 103--252.
+
+\bibitem{Kol03}
+A.~V. Kolchin, Limit theorems for a generalized allocation scheme, \emph{Diskret. Mat.} \textbf{15} (2003), no.~4, 148--157 (Russian); English transl., \emph{Discrete Math. Appl.} \textbf{13} (2003), no.~6, 627--636.
+
+\bibitem{KK06}
+A.~V. Kolchin and V.~F. Kolchin, On transition of distributions of sums of independent identically distributed random variables from one lattice to another in the generalised allocation scheme, \emph{Diskret. Mat.} \textbf{18} (2006), no.~4, 113--127 (Russian); English transl., \emph{Discrete Math. Appl.} \textbf{16} (2006), no.~6, 527--540.
+
+\bibitem{KK07}
+A.~V. Kolchin and V.~F. Kolchin, On the transition of distributions of sums of random variables related to the generalised allocation scheme from one lattice to another, \emph{Diskret. Mat.} \textbf{19} (2007), no.~3, 15--21 (Russian); English transl., \emph{Discrete Math. Appl.} \textbf{17} (2007), no.~3, 455--461.
+
+\bibitem{Kol68}
+V.~F. Kolchin, A class of limit theorems for conditional distributions, \emph{Litovsk. Mat. Sb.} \textbf{8} (1968), 53--63 (Russian).
+
+\bibitem{Kol99}
+V.~F. Kolchin, \emph{Random Graphs}, Cambridge University Press, Cambridge, 1999.
+
+\bibitem{KSC78}
+V.~F. Kolchin, B.~A. Sevast'yanov and V.~P. Chistyakov, \emph{Random Allocations}, V.~H. Winston \& Sons, Washington, D.C., 1978.
+
+\bibitem{LeC60}
+L.~Le Cam, An approximation theorem for the Poisson binomial distribution, \emph{Pacific J. Math.} \textbf{10} (1960), 1181--1197.
+
+\bibitem{Pav00}
+Yu.~L. Pavlov, \emph{Random Forests}, VSP, Zeist, 2000.
+
+\bibitem{S26a}
+Y.~Shmalo, The largest box in a sparse random allocation, preprint, 2026, \url{https://github.com/yspennstate/sparse-allocation-largest-box}.
+
+\bibitem{S26b}
+Y.~Shmalo, Rare observations under lattice-sum conditioning and joint allocation extremes, preprint, 2026, \url{https://github.com/yspennstate/joint-allocation-extremes}.
+
+\end{thebibliography}
+\end{document}
