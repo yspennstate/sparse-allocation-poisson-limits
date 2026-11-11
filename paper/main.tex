@@ -316,7 +316,7 @@ For (iv), if $h\ge h_0$ then $N_{[h,\infty)}(x)$ is a function of $F_{h_0}(x)$, 
 \]
 by \cite[Lemma~19.5]{J12}. Both bounds are uniform in $h$, which gives (iv) for every sequence $h(n)$.
 
-For (i), suppose that $n\Pp(\xi^{(n)}\ge h)\to\alpha$ along a subsequence, and let $p_h=\Pp(\xi^{(n)}\ge h)$. If $\alpha<\infty$, then $p_h\to0$, and Le Cam's inequality $\dtv(\Bin(n,p_h),\Po(np_h))\le np_h^2$ \cite{LeC60} shows that $N^\xi_{[h,\infty)}\to\Po(\alpha)$ in distribution; if $\alpha=\infty$, then $N^\xi_{[h,\infty)}\to\infty$ in probability by Chebyshev's inequality. In both cases $\dKt(N^\xi_{[h,\infty)},\Po(\alpha))\to0$ by \cite[Lemma~19.5]{J12}, and (iv) together with the triangle inequality gives $\dKt(N_{[h,\infty)},\Po(\alpha))\to0$, which is (i). The cases $\alpha=0$ and $\alpha=\infty$ of (i) give (ii) and (iii).
+For (i), suppose that $n\Pp(\xi^{(n)}\ge h)\to\alpha$ along a subsequence, and let $p_h=\Pp(\xi^{(n)}\ge h)$. If $\alpha<\infty$, then $p_h\to0$, and Le Cam's inequality $\dtv(\Bin(n,p_h),\Po(np_h))\le np_h^2$ \cite{LeC60} (see also \cite{BHJ92}) shows that $N^\xi_{[h,\infty)}\to\Po(\alpha)$ in distribution; if $\alpha=\infty$, then $N^\xi_{[h,\infty)}\to\infty$ in probability by Chebyshev's inequality. In both cases $\dKt(N^\xi_{[h,\infty)},\Po(\alpha))\to0$ by \cite[Lemma~19.5]{J12}, and (iv) together with the triangle inequality gives $\dKt(N_{[h,\infty)},\Po(\alpha))\to0$, which is (i). The cases $\alpha=0$ and $\alpha=\infty$ of (i) give (ii) and (iii).
 \end{proof}
 
 \begin{lemma}\label{lem:full}
@@ -486,8 +486,10 @@ No data were used. The code is available at\\ \url{https://github.com/yspennstat
 
 The paper is part of the Math Brain project, whose public repository is \url{https://github.com/yspennstate/math-brain-public}~\cite{MathBrainRepo}.
 
-\begin{thebibliography}{12}
+\begin{thebibliography}{13}
 
+\bibitem{BHJ92}
+A.~D.~Barbour, L.~Holst and S.~Janson, \emph{Poisson Approximation}, Oxford University Press, Oxford, 1992.
 \bibitem{CF19}
 A.~Chuprunov and I.~Fazekas, Poisson limit theorems for the generalized allocation scheme, \emph{Annales Univ. Sci. Budapest., Sect. Comp.} \textbf{49} (2019), 77--96.
 
